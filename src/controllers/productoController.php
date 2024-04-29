@@ -13,13 +13,13 @@ class productoController extends productoModel
         $rows = parent::getProducto($id);
         if ($rows == null) {
             $msj = "Producto no existe en la BD!";
-            header("Location: /crud-php/products-managment-search?msj=" . $msj);
+            header("Location: /crud-php/products-index-search?msj=" . $msj);
         } else {
             $id = $rows[0]['id'];
             $nom = $rows[0]['nombre'];
             $pre = $rows[0]['precio'];
             $uni = $rows[0]['unidades'];
-            header("Location: /crud-php/products-managment-search?id=" . $id .
+            header("Location: /crud-php/products-index-search?id=" . $id .
                 "&nom=" . $nom . "&pre=" . $pre . "&uni=" . $uni);
         }
     }
@@ -27,35 +27,46 @@ class productoController extends productoModel
     public function insertProducto()
     {
         $id = $_POST['id'];
-        $nombre = $_POST['nombre'];
-        $precio = $_POST['precio'];
-        $unidades = $_POST['unidades'];
-
-        if ($this->validarCampos($precio, $unidades)) {
-            parent::setId($id);
-            parent::setNombre($nombre);
-            parent::setPrecio($precio);
-            parent::setUnidades($unidades);
-            parent::almacenarProducto();
-            $msj = "El producto ".$nombre." fue almacenado exitosamente!";
-            echo("hola");
-            header("Location: http://localhost/crud-php/products-managment-insert?msj=" . $msj);
-        } else {
-            $msj = "Datos Inválidos!";
-            header("Location: http://localhost/crud-php/products-managment-insert?msj=" . $msj);
+        if(parent::getProducto($id)==null){
+            $nombre = $_POST['nombre'];
+            $precio = $_POST['precio'];
+            $unidades = $_POST['unidades'];
+    
+            if ($this->validarCampos($precio, $unidades)) {
+                parent::setId($id);
+                parent::setNombre($nombre);
+                parent::setPrecio($precio);
+                parent::setUnidades($unidades);
+                parent::almacenarProducto();
+                $msj = "El producto ".$nombre." fue almacenado exitosamente!";
+                header("Location: /crud-php/products-index-insert?msj=" . $msj);
+            } else {
+                $msj = "-Datos inválidos-";
+                header("Location: /crud-php/products-index-insert?msj=" . $msj);
+            }
+        }else{
+            $msj = "ID existente en la base de datos";
+            header("Location: /crud-php/products-index-insert?msj=" . $msj);
         }
+       
     }
 
 
     public function updtProduct()
     {
         $id = $_POST['id'];
-        $nombre = $_POST['nombre'];
-        $precio = $_POST['precio'];
-        $unidades = $_POST['unidades'];
-        parent::updateProducto($id, $nombre, $precio, $unidades);
-        $msj = "El producto con id: ".$id." fue actualizado exitosamente!";
-        header("Location: /crud-php/products-managment-update?msj=" . $msj);
+        if(parent::getProducto($id)==null){
+            $msj = "Producto no existe en la base de datos";
+            header("Location: /crud-php/products-index-update?msj=" . $msj);
+        }else{
+            
+            $nombre = $_POST['nombre'];
+            $precio = $_POST['precio'];
+            $unidades = $_POST['unidades'];
+            parent::updateProducto($id, $nombre, $precio, $unidades);
+            $msj = "El producto con id: ".$id." fue actualizado exitosamente!";
+            header("Location: /crud-php/products-index-update?msj=" . $msj);
+        }
     }
 
     public function deleteProduct()
@@ -63,11 +74,11 @@ class productoController extends productoModel
         $id = $_POST['id'];
         if(parent::getProducto($id)==null){
             $msj = "Producto no existe en la base de datos";
-            header("Location: /crud-php/products-managment-delete?msj=" . $msj);
+            header("Location: /crud-php/products-index-delete?msj=" . $msj);
         }else{
             parent::eliminarProducto($id);
             $msj = "Producto con id: " . $id . " fue eliminado de la base de datos";
-            header("Location: /crud-php/products-managment-delete?msj=" . $msj);
+            header("Location: /crud-php/products-index-delete?msj=" . $msj);
         }
         
        
@@ -95,7 +106,6 @@ class productoController extends productoModel
         require_once './src/public/views/delete.php';
 
     }
-
     private function validarCampos($precio, $unidades)
     {
         if (is_numeric($precio) && is_numeric($unidades)) {

@@ -1,55 +1,42 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD</title>
-    <link rel="stylesheet" href="src\public\assets\style.css">
-</head>
-
-<body>
-    <?php   
-    include_once './src/public/views/navbar.php';
-    ?>
-    <h1>Actualizar</h1>
-    <form action="/crud-php/products-managment-update" method="POST">
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Precio</th>
-                    <th>Unidades</th>
-                </tr>
-                <tr>
-                    <th>
-                    <input type="text" name="id" required placeholder="ID">
-                    
-                    </th>
-                    <th>
-                    <input type="text" name="nombre" required placeholder="Nombre del producto">
-                    
-                    </th>
-                    <th><input type="text" name="precio" placeholder="Valor del producto">
-                    </th>
-
-                    <th><input type="text" name="unidades" placeholder="Cantidad">
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Aquí se cargarán los registros -->
-            </tbody>
-        </table>
-        
-        <div class="btn-action">
+<?php
+include_once './src/public/views/navbar.php';
+?>
+            <form action="" method="POST">
+            <div class="frame13-button">
+              <button type="submit" class="frame13-button1 button">Actualizar</button>
+            </div>
+          </div>
+          <div class="frame13-form-fields">
+            <div class="frame13-form-display">
+              <div class="frame13-form-imputs">
+                <div class="frame13-input-id">
+                  <span class="frame13-text09">ID</span>
+                  <input type="text" name="id" placeholder="Código" required="true" class="frame13-textinput" />
+                </div>
+                <div class="frame13-input-nombre">
+                  <span class="frame13-text10">
+                    <span>Nombre</span>
+                    <br />
+                  </span>
+                  <input type="text" name="nombre" placeholder="Nombre"  class="frame13-textinput1" />
+                </div>
+                <div class="frame13-input-precio">
+                  <span class="frame13-text13">
+                    <span>Precio</span>
+                    <br />
+                  </span>
+                  <input type="text" name="precio" placeholder="Precio"  class="frame13-textinput2" />
+                </div>
+                <div class="frame13-input-cantidad">
+                  <span class="frame13-text16">
+                    <span>Cantidad</span><br />
+                  </span>
+                  <input type="text" name="unidades" placeholder="Cantidad"  class="frame13-textinput3" />
+                </div>
+              </div>
+            </div>
           
-            <button type="submit" name="actualizar" class="btn">Actualizar</button>
-            
-        </div>
-    </form>
-
+          </form>
     <div class="msj">
         <?php
         if (isset($_GET['msj'])) {
@@ -57,7 +44,15 @@
         }
         ?>
     </div>
-
+          </div>
+        </div>
+        
+        <div class="frame13-main-img"></div>
+        
+      </div>
+      
+    </div>
+  </div>
 </body>
 
 </html>
